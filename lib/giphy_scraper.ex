@@ -1,11 +1,11 @@
 defmodule GiphyScraper do
-  @type image :: %{id: String.t, url: String.t, title: String.t, author: String.t | nil}
-  @type response :: list(image)
-  @type search :: {String.t, String.t, non_neg_integer}
+  @spec search() :: list(GiphyImage)
+  def search() do 
+    GiphyVendorHttpApi.get_list_giphy_images(Giphy, {"cheese", 25})
+  end
 
-  @spec search_for_gifs_from_specified_vendor(search) :: response
-  def search_for_gifs_from_specified_vendor(search) do
-    {vendor, query, limit} = search
-    Vendor.get(vendor, {query, limit})
+  @spec search(String.t, String.t, non_neg_integer) :: list(GiphyImage)
+  def search(vendor, query, limit) do
+    GiphyVendorHttpApi.get_list_giphy_images(vendor, {query, limit})
   end
 end
